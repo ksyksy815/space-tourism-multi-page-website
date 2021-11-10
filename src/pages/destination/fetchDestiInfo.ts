@@ -1,9 +1,17 @@
 import { destinations } from "../../data.json"
 
-export const fetchDestiInfo = (current: string) => {
-  for (let i = 0; i < destinations.length; i++) {
-    if (destinations[i].name === current) {
-      return destinations[i]
-    }
+export interface DestinationInterface {
+  name: string
+  images: {
+    png: string
+    webp: string
   }
+  description: string
+  distance: string
+  travel: string
+}
+
+export const fetchDestiInfo = (current: string): DestinationInterface => {
+  const info = destinations.filter(planet => planet.name === current)
+  return info[0]
 }
