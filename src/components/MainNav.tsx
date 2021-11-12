@@ -1,6 +1,12 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
 import logo from "../assets/shared/logo.svg"
+import { useLocationPathname } from '../hooks/useLocationPathname'
+
+interface NavProps {
+  currentLocation: string
+}
 
 const StyledNav = styled.nav`
   position: absolute;
@@ -31,6 +37,23 @@ const StyledNav = styled.nav`
 
     li {
       height: 100%;
+
+      &:first-child {
+        border-bottom: ${ (props: NavProps) => props.currentLocation === "/" ? "2px solid #fff" : "none"};
+      }
+
+      &:nth-child(2) {
+        border-bottom: ${ (props: NavProps) => props.currentLocation === "/destination" ? "2px solid #fff" : "none"};
+      }
+
+      &:nth-child(3) {
+        border-bottom: ${ (props: NavProps) => props.currentLocation === "/crew" ? "2px solid #fff" : "none"};
+      }
+
+      &:last-child {
+        border-bottom: ${ (props: NavProps) => props.currentLocation === "/technology" ? "2px solid #fff" : "none"};
+      }
+
       a {
         display: flex;
       height: 100%;
@@ -47,9 +70,17 @@ const StyledNav = styled.nav`
   }
 `
 
-export default function MainNav() {
+
+
+export default function MainNav () {
+  const location = useLocationPathname()
+
+  useEffect(()=> {
+    console.log(location)
+  }, [location])
+
   return (
-    <StyledNav>
+    <StyledNav currentLocation={location}>
       <span id="logo">
         <img src={logo} alt="logo"/>
       </span>
